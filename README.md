@@ -96,7 +96,7 @@ corsi N ---- N atenei
 
 Tipologie
 Metodo Endpoint Descrizione
-GET /api/tipologie Recupera tutte le tipologie
+GET /api/tipologie Recupera tutte le tipologie <br>
 POST /api/tipologie Crea una tipologia
 PUT /api/tipologie/:id Modifica una tipologia
 DELETE /api/tipologie/:id Elimina una tipologia
