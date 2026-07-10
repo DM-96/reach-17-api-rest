@@ -10,7 +10,7 @@ Il progetto permette di creare, modificare, eliminare e visualizzare le informaz
 
 - Node.js
 - Express.js
-- MySQL / MariaDB
+- MySQL
 - mysql2
 - JavaScript
 - Postman (per il testing delle API)
