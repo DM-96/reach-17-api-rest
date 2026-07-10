@@ -36,7 +36,7 @@ CREATE TABLE atenei (
 
 );
 
-CREATE TABLE corso_atenei (
+CREATE TABLE corso_ateneo (
 
     corso_id INT,
 
