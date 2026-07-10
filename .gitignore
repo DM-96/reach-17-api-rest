@@ -1,0 +1,12 @@
+# Dipendenze installate da npm
+node_modules/
+
+# Variabili d'ambiente
+.env
+
+# Log
+*.log
+
+# File di sistema
+.DS_Store
+Thumbs.db
