@@ -95,24 +95,23 @@ corsi N ---- N atenei
 ## Endpoint API
 
 Tipologie
-Metodo Endpoint Descrizione
-GET /api/tipologie Recupera tutte le tipologie <br>
-POST /api/tipologie Crea una tipologia
-PUT /api/tipologie/:id Modifica una tipologia
-DELETE /api/tipologie/:id Elimina una tipologia
+GET    /api/tipologie        Recupera tutte le tipologie <br>
+POST   /api/tipologie        Crea una tipologia
+PUT    /api/tipologie/:id    Modifica una tipologia
+DELETE /api/tipologie/:id    Elimina una tipologia
+
 Corsi
-Metodo Endpoint Descrizione
-GET /api/corsi Recupera tutti i corsi
-POST /api/corsi Crea un corso
-PUT /api/corsi/:id Modifica un corso
-DELETE /api/corsi/:id Elimina un corso
-POST /api/corsi/:id/atenei Associa un corso ad un ateneo
+GET     /api/corsi           Recupera tutti i corsi
+POST    /api/corsi           Crea un corso
+PUT     /api/corsi/:id       Modifica un corso
+DELETE  /api/corsi/:id       Elimina un corso
+POST /api/corsi/:id/atenei   Associa un corso ad un ateneo
+
 Atenei
-Metodo Endpoint Descrizione
-GET /api/atenei Recupera tutti gli atenei
-POST /api/atenei Crea un ateneo
-PUT /api/atenei/:id Modifica un ateneo
-DELETE /api/atenei/:id Elimina un ateneo
+GET     /api/atenei          Recupera tutti gli atenei
+POST    /api/atenei          Crea un ateneo
+PUT     /api/atenei/:id      Modifica un ateneo
+DELETE  /api/atenei/:id      Elimina un ateneo
 
 ## 🔎 Filtri disponibili
 
