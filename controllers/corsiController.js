@@ -242,9 +242,6 @@ const associaAteneo = async (req, res) => {
         // Recupera l'id dell'ateneo dal body.
         const { ateneo_id } = req.body;
 
-        console.log("PARAMS:", req.params);
-        console.log("BODY:", req.body);
-
         // Controlla che l'ateneo sia stato inviato.
         if (!ateneo_id) {
 
