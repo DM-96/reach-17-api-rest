@@ -12,15 +12,6 @@ Il progetto utilizza variabili d'ambiente per gestire la configurazione del data
 
 Dopo aver clonato il repository, crea un file `.env` nella cartella principale del progetto prendendo come riferimento il file `.env.example`.
 
-Esempio di configurazione:
-
-```env
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=
-DB_NAME=reach17
-PORT=3000
-```
 
 ## Installazione e avvio
 
