@@ -1,19 +1,19 @@
 
 const ateneiModel = require("../models/ateneiModel");
 
-const getAll = async (req, res) => {
+const getAll = async (req, res,next) => {
     try {
+
         const atenei = await ateneiModel.getAll();
+
         res.status(200).json(atenei);
+
     } catch (errore) {
-        console.error(errore);
-        res.status(500).json({
-            message: "Errore interno del server."
-        });
+       next(errore);
     }
 };
 
-const create = async (req, res) => {
+const create = async (req, res,next) => {
    
     try {
         const {nome} = req.body;
@@ -32,21 +32,22 @@ const create = async (req, res) => {
             id: risultato.insertId
         });
        } catch (errore) {
-
-        console.error(errore);
-
-        res.status(500).json({
-            message: "Errore interno del server.",
-        });
+        next(errore);
        }      
 };
 
-const update = async (req,res) => {
+const update = async (req,res,next) => {
     try {
 
-         const {id} = req.params;
+         const id = Number(req.params.id);
 
-         const {nome} = req.body;
+        if (!Number.isInteger(id)){
+            return res.status(400).json({
+                message: "ID non valido"
+            });
+        }
+
+        const {nome} =req.body;
 
         if (!nome || nome.trim() === ""){
             return res.status(400).json({
@@ -74,18 +75,20 @@ const update = async (req,res) => {
 
         });
     } catch (errore) {
-
-        console.error(errore);
-
-        res.status(500).json({
-            message: "Errore interno del server."
-        });
-    }
+        next(errore);
 }
+};
 
-const remove = async (req, res) => {
+const remove = async (req, res, next) => {
     try {
-        const {id} = req.params;
+
+        const id = Number(req.params.id);
+
+           if (!Number.isInteger(id)){
+            return res.status(400).json({
+                message: "ID non valido"
+            });
+        }
 
         const risultato = await ateneiModel.remove(id);
 
@@ -102,13 +105,7 @@ const remove = async (req, res) => {
 
 
     }catch (errore) {
-
-        console.error(errore);
-
-        res.status(500).json({
-            message: "Errore interno del server."
-        });
-
+        next(errore);
     }
 }
 

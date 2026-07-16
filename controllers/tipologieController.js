@@ -2,7 +2,7 @@
 const tipologieModel = require("../models/tipologieModel");
 
 // Funzione che gestisce la richiesta GET /api/tipologie.
-const getAll = async (req, res) => {
+const getAll = async (req, res,next) => {
 
     try {
         // Chiama il model.
@@ -15,21 +15,13 @@ const getAll = async (req, res) => {
 
     } catch (errore) {
 
-        // Scrive l'errore nel terminale.
-        console.error(errore);
-
-        // Restituisce un errore HTTP 500.
-        res.status(500).json({
-
-            message: "Errore interno del server"
-
-        });
+     next(errore);
 
     }
 };
 
 // Gestisce la creazione di una nuova tipologia.
-const create = async (req, res) => {
+const create = async (req, res,next) => {
 
     try {
 
@@ -62,36 +54,23 @@ const create = async (req, res) => {
 
     } catch (errore) {
 
-        // Se il database restituisce errore 1062
-        // significa che è stato violato un vincolo UNIQUE.
-        if (errore.code === "ER_DUP_ENTRY") {
-
-            return res.status(409).json({
-
-                message: "La tipologia esiste già."
-
-            });
-
-        }
-
-        console.error(errore);
-
-        res.status(500).json({
-
-            message: "Errore interno del server."
-
-        });
+        next(errore);
 
     }
 
 };
 
 //Gestisce la modifica di una tipologia esistente.
-const update = async (req, res) => {
+const update = async (req, res,next) => {
     try {
+      
+      const id = Number(req.params.id);
 
-        // Recupera l'id presente nell'URL.
-        const { id } = req.params;
+        if (!Number.isInteger(id)){
+            return res.status(400).json({
+                message: "ID non valido"
+            });
+        }
 
         // Recupera il nuovo nome dal body JSON.
         const { nome } = req.body;
@@ -134,23 +113,22 @@ const update = async (req, res) => {
 
     } catch (errore) {
 
-        console.error(errore);
-
-        res.status(500).json({
-
-            message: "Errore interno del server."
-
-        });
+       next(errore);
     }
 };
 
 // Gestisce l'eliminazione di una tipologia.
-const remove = async (req, res) => {
+const remove = async (req, res,next) => {
 
     try {
 
-        // Recupera l'id dall'URL.
-        const { id } = req.params;
+        const id = Number(req.params.id);
+
+        if (!Number.isInteger(id)){
+            return res.status(400).json({
+                message: "ID non valido"
+            });
+        }
 
         // Chiama il model per eliminare il record.
         const risultato = await tipologieModel.remove(id);
@@ -174,19 +152,9 @@ const remove = async (req, res) => {
 
     } catch (errore) {
 
-    console.error(errore);
+        next(errore);
 
-
-    if (errore.code === "ER_ROW_IS_REFERENCED_2") {
-
-        return res.status(409).json({
-            message: "Impossibile eliminare la tipologia: è utilizzata da uno o più corsi."
-        });
     }
-    res.status(500).json({
-        message: "Errore interno del server."
-    });
-       }
 }
 
 module.exports = {

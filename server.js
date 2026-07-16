@@ -1,3 +1,7 @@
+require("dotenv").config();
+
+const PORT = process.env.PORT || 3000;
+
 // Importa il pool di connessioni al database.
 const pool = require("./config/db");
 
@@ -58,7 +62,7 @@ async function testConnessione() {
 
     } catch (errore) {
 
-        console.error("Errore di connessione:", errore.message);
+        console.error(errore);
 
     }
 }
@@ -74,3 +78,7 @@ app.listen(3000, () => {
     console.log("Server avviato sulla porta 3000");
 
 });
+
+const errorHandler = require("./middlewares/errorHandler");
+
+app.use(errorHandler);

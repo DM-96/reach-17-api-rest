@@ -4,7 +4,7 @@
 const corsiModel = require("../models/corsiModel");
 
 // Funzione che gestisce la richiesta GET /api/corsi.
-const getAll = async (req, res) => {
+const getAll = async (req, res,next) => {
 
     try {
 
@@ -19,20 +19,14 @@ const getAll = async (req, res) => {
 
     } catch (errore) {
 
-        console.error(errore);
-
-        res.status(500).json({
-
-            message: "Errore interno del server."
-
-        });
+      next(errore);
 
     }
 
 };
 
 // Gestisce la creazione di un nuovo corso..
-const create = async (req, res) => {
+const create = async (req, res,next) => {
 
     try {
 
@@ -82,38 +76,22 @@ const create = async (req, res) => {
 
     } catch (errore) {
 
-        console.error(errore);
-
-        // Errore della foreign key.
-        // Significa che tipologia_id
-        // non esiste nella tabella tipologie.
-        if (errore.code === "ER_NO_REFERENCED_ROW_2") {
-
-            return res.status(400).json({
-
-                message:"La tipologia indicata non esiste."
-
-            });
-
+        next(errore);
+        
         }
-
-        // Errore generico.
-        res.status(500).json({
-
-            message:"Errore interno del server."
-
-        });
-    }
 };
 
 // Modifica un corso esistente.
-const update = async (req, res) => {
+const update = async (req, res,next) => {
     try {
+       // Verifica che l'ID ricevuto dall'URL sia un numero intero valido.
+      const id = Number(req.params.id);
 
-        // Recupera l'id dall'URL.
-        // Esempio:
-        // PUT /api/corsi/1
-        const { id } = req.params;
+        if (!Number.isInteger(id)){
+            return res.status(400).json({
+                message: "ID non valido"
+            });
+        }
 
         // Recupera i dati dal body.
         const { nome, tipologia_id } = req.body;
@@ -171,34 +149,21 @@ const update = async (req, res) => {
         });
 
     } catch (errore) {
-
-        console.error(errore);
-
-        // Foreign key non valida.
-        if (errore.code === "ER_NO_REFERENCED_ROW_2") {
-
-            return res.status(400).json({
-
-                message:"La tipologia indicata non esiste."
-
-            });
-
-        }
-
-        res.status(500).json({
-
-            message:"Errore interno del server."
-
-        });
+      next(errore);
     }
 };
 
 // Elimina un corso.
-const remove = async (req, res) => {
+const remove = async (req, res,next) => {
     try {
 
-        // Recupera l'id dall'URL.
-        const { id } = req.params;
+        const id = Number(req.params.id);
+
+        if (!Number.isInteger(id)){
+            return res.status(400).json({
+                message: "ID non valido"
+            });
+        }
 
         // Chiama il model.
         const risultato = await corsiModel.remove(id);
@@ -215,7 +180,6 @@ const remove = async (req, res) => {
         }
 
         // Eliminazione riuscita.
-        // 204 non restituisce contenuto.
         res.status(200).send({
             message: "Corso eliminato con successo."
         });
@@ -223,21 +187,22 @@ const remove = async (req, res) => {
 
     } catch (errore) {
 
-        console.error(errore);
-
-        res.status(500).json({
-
-            message:"Errore interno del server."
-        });
+        next(errore);
     }
 };
 
-const associaAteneo = async (req, res) => {
+const associaAteneo = async (req, res,next) => {
 
     try {
 
         // Recupera l'id del corso dall'URL.
-        const { id } = req.params;
+        const id = Number(req.params.id);
+
+        if (!Number.isInteger(id)){
+            return res.status(400).json({
+                message: "ID non valido"
+            });
+        }
 
         // Recupera l'id dell'ateneo dal body.
         const { ateneo_id } = req.body;
@@ -263,34 +228,7 @@ const associaAteneo = async (req, res) => {
         });
 
     } catch (errore) {
-
-    if (errore.code === "ER_DUP_ENTRY") {
-
-        return res.status(409).json({
-
-            message:"Il corso è già associato a questo ateneo."
-
-        });
-
-    }
-
-    if (errore.code === "ER_NO_REFERENCED_ROW_2") {
-
-        return res.status(400).json({
-
-            message:"Il corso o l'ateneo indicato non esiste."
-
-        });
-
-    }
-
-    console.error(errore);
-
-    return res.status(500).json({
-
-        message:"Errore interno del server."
-
-    });
+         next(errore);
     }
 }
 

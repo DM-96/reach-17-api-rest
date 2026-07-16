@@ -1,6 +1,9 @@
+// Importa il modulo dotenv per leggere le variabili d'ambiente dal file .env
+require("dotenv").config();
+
 // Importa il modulo mysql2 nella versione Promise.
 // Questo ci permette di usare async/await invece delle callback.
-const mysql = require("mysql2/promise");
+const mysql = require("mysql2");
 
 // Crea un pool di connessioni.
 // Un pool mantiene più connessioni aperte e le riutilizza,
@@ -8,20 +11,20 @@ const mysql = require("mysql2/promise");
 const pool = mysql.createPool({
 
     // Indirizzo del server MySQL.
-    host: "localhost",
+    host: process.env.DB_HOST,
 
     // Nome utente del database.
-    user: "root",
+    user: process.env.DB_USER,
 
     // Password dell'utente.
-    password: "",
+    password: process.env.DB_PASSWORD,
 
     // Nome del database.
-    database: "reach17"
+    database: process.env.DB_NAME
 
 });
 
 // Esporta il pool.
 // In questo modo gli altri file potranno fare:
 // const pool = require("../config/db");
-module.exports = pool;
+module.exports = pool.promise();
