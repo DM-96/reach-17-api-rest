@@ -195,7 +195,6 @@ const associaAteneo = async (req, res,next) => {
 
     try {
 
-        // Recupera l'id del corso dall'URL.
         const id = Number(req.params.id);
 
         if (!Number.isInteger(id)){
