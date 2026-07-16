@@ -6,6 +6,64 @@ Il progetto permette di creare, modificare, eliminare e visualizzare le informaz
 
 ---
 
+## Configurazione
+
+Il progetto utilizza variabili d'ambiente per gestire la configurazione del database e della porta del server.
+
+Dopo aver clonato il repository, crea un file `.env` nella cartella principale del progetto prendendo come riferimento il file `.env.example`.
+
+Esempio di configurazione:
+
+```env
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=reach17
+PORT=3000
+```
+
+## Installazione e avvio
+
+1. Clonare il repository:
+
+```bash
+git clone https://github.com/DM-96/reach-17-api-rest.git
+```
+
+2. Accedere alla cartella del progetto:
+
+```bash
+cd reach-17-api-rest
+```
+
+3. Installare le dipendenze:
+
+```bash
+npm install
+```
+
+4. Creare il file `.env` utilizzando il file `.env.example` come riferimento.
+
+5. Importare il file `migration.sql` nel proprio server MySQL. Lo script creerà automaticamente il database `reach17` e tutte le tabelle necessarie.
+
+6. Avviare il server in modalità sviluppo:
+
+```bash
+npm run dev
+```
+
+Oppure avviare il server in modalità standard:
+
+```bash
+npm start
+```
+
+Una volta avviato, l'API sarà disponibile all'indirizzo:
+
+```text
+http://localhost:3000
+```
+
 ## 🚀 Tecnologie utilizzate
 
 - Node.js
@@ -95,23 +153,26 @@ corsi N ---- N atenei
 ## Endpoint API
 
 ## Tipologie
-GET    /api/tipologie        **Recupera tutte le tipologie** <br>
-POST   /api/tipologie        **Crea una tipologia**<br>
-PUT    /api/tipologie/:id    **Modifica una tipologia**<br>
-DELETE /api/tipologie/:id    **Elimina una tipologia**<br>
+
+GET /api/tipologie **Recupera tutte le tipologie** <br>
+POST /api/tipologie **Crea una tipologia**<br>
+PUT /api/tipologie/:id **Modifica una tipologia**<br>
+DELETE /api/tipologie/:id **Elimina una tipologia**<br>
 
 ## Corsi
-GET     /api/corsi           **Recupera tutti i corsi**<br>
-POST    /api/corsi           **Crea un corso**<br>
-PUT     /api/corsi/:id       **Modifica un corso**<br>
-DELETE  /api/corsi/:id       **Elimina un corso**<br>
-POST /api/corsi/:id/atenei   **Associa un corso ad un ateneo**<br>
+
+GET /api/corsi **Recupera tutti i corsi**<br>
+POST /api/corsi **Crea un corso**<br>
+PUT /api/corsi/:id **Modifica un corso**<br>
+DELETE /api/corsi/:id **Elimina un corso**<br>
+POST /api/corsi/:id/atenei **Associa un corso ad un ateneo**<br>
 
 ## Atenei
-GET     /api/atenei          **Recupera tutti gli atenei**<br>
-POST    /api/atenei          **Crea un ateneo**<br>
-PUT     /api/atenei/:id      **Modifica un ateneo**<br>
-DELETE  /api/atenei/:id      **Elimina un ateneo**<br>
+
+GET /api/atenei **Recupera tutti gli atenei**<br>
+POST /api/atenei **Crea un ateneo**<br>
+PUT /api/atenei/:id **Modifica un ateneo**<br>
+DELETE /api/atenei/:id **Elimina un ateneo**<br>
 
 ## 🔎 Filtri disponibili
 
